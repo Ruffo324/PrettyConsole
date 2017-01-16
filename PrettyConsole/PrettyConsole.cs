@@ -21,6 +21,13 @@ namespace PrettyConsole
         /// <see cref="https://msdn.microsoft.com/de-de/library/8kb3ddd4(v=vs.110).aspx"/>
         /// <param name="PFormatStr"></param>
         public static string FDateTimeFormatStr { get; set; } = "dd.MM.yyyy HH:mm:ss";
+
+        /// <summary>
+        /// Should every Output over thid Libary reset the Console Color to default after Writing text?
+        /// (Recommend)
+        /// </summary>
+        public static bool FAutoResetColorAfterOutput{ get; set; } = true;
+
         /// <summary>
         /// Line Length default Value. to reset set -1
         /// </summary>
@@ -233,7 +240,11 @@ namespace PrettyConsole
                 Console.Write(ColorStrs[i]);
                 returnString = returnString + ColorStrs[i];
             }
-
+            //reset if it is wanted
+            if (FAutoResetColorAfterOutput)
+            {
+                Console.ResetColor();
+            }
             return returnString;
         }
 

@@ -8,3 +8,8 @@ C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\bin\Debug\P
 C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.csprojResolveAssemblyReference.cache
 C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.dll
 C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.pdb
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\PrettyConsole\bin\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\PrettyConsole\bin\Debug\PrettyConsole.pdb
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\PrettyConsole\obj\Debug\PrettyConsole.csprojResolveAssemblyReference.cache
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\PrettyConsole\obj\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\PrettyConsole\obj\Debug\PrettyConsole.pdb
