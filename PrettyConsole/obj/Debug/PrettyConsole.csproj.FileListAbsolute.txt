@@ -1,0 +1,10 @@
+C:\Users\groot\Desktop\FiveMp Entwicklung RP\PrettyConsole\bin\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\FiveMp Entwicklung RP\PrettyConsole\bin\Debug\PrettyConsole.pdb
+C:\Users\groot\Desktop\FiveMp Entwicklung RP\PrettyConsole\obj\Debug\PrettyConsole.csprojResolveAssemblyReference.cache
+C:\Users\groot\Desktop\FiveMp Entwicklung RP\PrettyConsole\obj\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\FiveMp Entwicklung RP\PrettyConsole\obj\Debug\PrettyConsole.pdb
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\bin\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\bin\Debug\PrettyConsole.pdb
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.csprojResolveAssemblyReference.cache
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.dll
+C:\Users\groot\Desktop\GTA-Network My  Public Projects\PrettyConsole\obj\Debug\PrettyConsole.pdb
