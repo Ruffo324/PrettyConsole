@@ -22,6 +22,9 @@ namespace TestConsole
             console.Log("Quick ".cCyan() + " and ".cReset() + "Easy".cGreen() + " colorized console Output.".cReset());
             console.Line(); //Line with Default ("-".cGray(), 50)
 
+            //Disable this if you want to use this in a normal c# project.. Or leave it enabled to use 
+            //https://wiki.gtanet.work/index.php?title=Fonts Colors in the Strings directly..
+            console.FIncludeGTANetworkColors = false;
 
             #region Output All Colors
 
@@ -44,10 +47,13 @@ namespace TestConsole
             console.Log("Magenta".cMagenta());
             console.Log("Yellow".cYellow());
             console.Log("White".cWhite());
+            console.Log("New" + "Line in the String".cNewLine());
             console.Log("Orignal-Console-Color".cReset());
             console.Line("#", 10);
 
             #endregion //Output All Colors
+
+
 
             #region Propertys Test
 
@@ -76,6 +82,25 @@ namespace TestConsole
 
             #endregion //Example for stepped text end
 
+            #region Gta-Network Specific
+
+            console.WriteLine("~r~ Gta-Network support not enabled!");
+            console.FIncludeGTANetworkColors = true;
+            console.WriteLine("~r~ Gta-Network support enabled now!");
+            console.WriteLine("~r~ = Red " +
+                            "~b~ = Blue " +
+                            "~g~ = Green " +
+                            "~y~ = Yellow " +
+                            "~p~ = Purple " +
+                            "~o~ = Orange " +
+                            "~c~ = Grey " +
+                            "~m~ = Darker Grey " +
+                            "~u~ = Black " +
+                            "~n~ = New Line " +
+                            "~s~ = Default White " +
+                            "~w~ = White " +
+                            "~h~ = Bold Text");
+            #endregion //Gta-Network Specific
 
             //Pause here
             Console.ReadKey();

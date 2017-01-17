@@ -6,15 +6,13 @@ using System.Collections.Generic;
 /// Can be used in Any C# Console Programm.
 /// Created for GTA-Network Server.
 /// </summary>
-namespace PrettyConsole
-{
+namespace PrettyConsole {
 
     /// <summary>
     /// Functions for the Console Ouput
     /// </summary>
-    public static class ConsoleFunctions
-    {
-        
+    public static class ConsoleFunctions {
+
         /// <summary>
         /// Set / gets the DateTimeFormat String in the Console-Output.
         /// </summary>
@@ -26,7 +24,7 @@ namespace PrettyConsole
         /// Should every Output over thid Libary reset the Console Color to default after Writing text?
         /// (Recommend)
         /// </summary>
-        public static bool FAutoResetColorAfterOutput{ get; set; } = true;
+        public static bool FAutoResetColorAfterOutput { get; set; } = true;
 
         /// <summary>
         /// Line Length default Value. to reset set -1
@@ -42,6 +40,11 @@ namespace PrettyConsole
         /// Set this, if u have to use this pattern
         /// </summary>
         public static string FStopColorCodeStr { get; set; } = "}}}";
+
+        /// <summary>
+        /// Translating the Ingame Gta-Network Colors like ~r~ to Console-Color too?
+        /// </summary>
+        public static bool FIncludeGTANetworkColors { get; set; } = true;
 
         #region ColorsDictonary
 
@@ -93,13 +96,12 @@ namespace PrettyConsole
         /// <param name="PString">The Output String</param>
         /// <param name="PReturnStringIncludesDateTime">Should the Reoturn String contains the Date-Time Tag?</param>
         /// <returns>The Outputed string (Without Color-Codes).. Usefull for lo files</returns>
-        public static string Log(string PString, bool PReturnStringIncludesDateTime = true)
-        {
+        public static string Log(string PString, bool PReturnStringIncludesDateTime = true) {
             //If String is empty or Null
             if (string.IsNullOrEmpty(PString))
             {
                 //returning Null
-                return null; 
+                return null;
             }
             //Calc DateTimeString
             DateTime TimeNow = DateTime.Now;
@@ -126,8 +128,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PColorizedString">The OutputedString with Colorized-Informations</param>
         /// <returns>Input string without Color-Strings</returns>
-        public static string WriteLine(string PColorizedString)
-        {
+        public static string WriteLine(string PColorizedString) {
             string returnStr = Write(PColorizedString);
             Console.WriteLine();
             return returnStr;
@@ -139,8 +140,7 @@ namespace PrettyConsole
         /// <param name="PLineChar">("-") The Char wich sould be Printed. Colors Allowed here! "x".cBlue(). MaxLength 5!</param>
         /// <param name="PLength">How often should the char printed? default 80 OR if setted FLineLength!</param>
         /// <returns></returns>
-        public static string Line(string PLineChar = "-", int PLength = -1)
-        { 
+        public static string Line(string PLineChar = "-", int PLength = -1) {
             string returnStr = string.Empty;
             string colorStr = string.Empty;
             //Use Default or Prop if not set..
@@ -161,16 +161,17 @@ namespace PrettyConsole
                 colorStr = PLineChar.Substring(PLineChar.IndexOf(FStartColorCodeStr) - 3, PLineChar.IndexOf(FStopColorCodeStr));
                 PLineChar = PLineChar.Replace(colorStr, "");
             }
-            else {
+            else
+            {
                 colorStr = "".cGray();
             }
 
             //No Strings longer then 5
             if (PLineChar.Length > 5)
             {
-                throw new Exception ("PLinechar length is bigger then 5! (PrettyConsole.Line())");
+                throw new Exception("PLinechar length is bigger then 5! (PrettyConsole.Line())");
             }
-                //Sorry but not allowed ;)
+            //Sorry but not allowed ;)
             if (PLineChar.Contains(FStartColorCodeStr) || PLineChar.Contains(FStopColorCodeStr))
             {
                 PLineChar = "-";
@@ -193,8 +194,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PColorizedString">The OutputedString with Colorized-Informations</param>
         /// <returns>Input string without Color-Strings</returns>
-        public static string Write(string PColorizedString, bool PWithTimestamp = false)
-        {
+        public static string Write(string PColorizedString, bool PWithTimestamp = false) {
             //If with Timestamp, then write Timestamp!
             if (PWithTimestamp)
             {
@@ -210,6 +210,13 @@ namespace PrettyConsole
                 return null;
             }
             string returnString = string.Empty;
+
+            //Translating In-Game GTA-Network Colors to the Console-Color too?
+            if (FIncludeGTANetworkColors)
+            {
+                PColorizedString = ConvertGtaNetworkColorsToPrettyConsole(PColorizedString);
+            }
+
             //Splitting Text in SubColors
             string[] ColorStrs = PColorizedString.Split(new[] { FStartColorCodeStr }, StringSplitOptions.None);
             for (int i = 0; i < ColorStrs.Length; i++)
@@ -223,6 +230,10 @@ namespace PrettyConsole
                     if (ColorKey == "_")
                     {
                         Console.ResetColor();
+                    }
+                    else if (ColorKey == "NL")
+                    {
+                        Console.WriteLine();
                     }
                     else
                     {
@@ -248,6 +259,33 @@ namespace PrettyConsole
             return returnString;
         }
 
+        /// <summary>
+        /// Converts String oppurtunities from Gtanet.work to PrettyConsole Colors
+        /// ~w~ = cWhite()
+        /// </summary>
+        /// <param name="PString">The GTA-Network string</param>
+        /// <returns>PrettyConsoleifyed String</returns>
+        public static string ConvertGtaNetworkColorsToPrettyConsole(string PString) {
+            string returnStr = "";
+
+            //Now Replaceing
+            returnStr = PString.
+                        Replace("~r~", "".cRed()).
+                        Replace("~b~", "".cBlue()).
+                        Replace("~g~", "".cGreen()).
+                        Replace("~y~", "".cYellow()).
+                        Replace("~p~", "".cDarkMagenta()).
+                        Replace("~o~", "".cMagenta()).
+                        Replace("~c~", "".cGray()).
+                        Replace("~m~", "".cDarkGray()).
+                        Replace("~u~", "".cBlack()).
+                        Replace("~n~", "".cNewLine()).
+                        Replace("~h~", "").
+                        Replace("~s~", "".cReset()).
+                        Replace("~w~", "".cWhite());
+            return returnStr;
+        }
+
         #endregion //Functions
     }
 
@@ -255,15 +293,25 @@ namespace PrettyConsole
     /// <summary>
     /// String Extension
     /// </summary>
-    public static class StringExtensions
-    {
+    public static class StringExtensions {
+
+        /// <summary>
+        /// Apply a new Line in the Console
+        /// </summary>
+        /// <param name="PString">The Call for a new Line</param>
+        /// <returns>Colorized String</returns>
+        public static string cNewLine(this string PString) {
+            //"0" = Black here
+            return ConsoleFunctions.FStartColorCodeStr + "NL" + ConsoleFunctions.FStopColorCodeStr + PString;
+        }
+
+
         /// <summary>
         /// Change the String color to Black 
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cBlack(this string PString)
-        {
+        public static string cBlack(this string PString) {
             //"0" = Black here
             return ConsoleFunctions.FStartColorCodeStr + "0" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
@@ -273,8 +321,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkBlue(this string PString)
-        {
+        public static string cDarkBlue(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DB" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -283,8 +330,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkRed(this string PString)
-        {
+        public static string cDarkRed(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DR" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -293,8 +339,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkMagenta(this string PString)
-        {
+        public static string cDarkMagenta(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DM" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -303,8 +348,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkYellow(this string PString)
-        {
+        public static string cDarkYellow(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DY" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -313,8 +357,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkCyan(this string PString)
-        {
+        public static string cDarkCyan(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DC" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -323,8 +366,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cGray(this string PString)
-        {
+        public static string cGray(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "g" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -333,8 +375,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkGray(this string PString)
-        {
+        public static string cDarkGray(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "Dg" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -343,8 +384,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cBlue(this string PString)
-        {
+        public static string cBlue(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "B" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -353,8 +393,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cCyan(this string PString)
-        {
+        public static string cCyan(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "C" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -363,8 +402,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cRed(this string PString)
-        {
+        public static string cRed(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "R" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -373,8 +411,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cMagenta(this string PString)
-        {
+        public static string cMagenta(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "M" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -383,8 +420,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cYellow(this string PString)
-        {
+        public static string cYellow(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "Y" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -393,8 +429,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cWhite(this string PString)
-        {
+        public static string cWhite(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "W" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -403,8 +438,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cReset(this string PString)
-        {
+        public static string cReset(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "_" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -414,8 +448,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cGreen(this string PString)
-        {
+        public static string cGreen(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "G" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
 
@@ -424,8 +457,7 @@ namespace PrettyConsole
         /// </summary>
         /// <param name="PString">The String that should be Colorized</param>
         /// <returns>Colorized String</returns>
-        public static string cDarkGreen(this string PString)
-        {
+        public static string cDarkGreen(this string PString) {
             return ConsoleFunctions.FStartColorCodeStr + "DG" + ConsoleFunctions.FStopColorCodeStr + PString;
         }
     }
