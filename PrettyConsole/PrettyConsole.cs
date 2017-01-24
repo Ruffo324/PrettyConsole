@@ -108,8 +108,9 @@ namespace PrettyConsole {
             string DateTimeString = "[".cDarkGray() + TimeNow.ToString(FDateTimeFormatStr).cGray() + "]".cDarkGray() + "".cReset();
             //Write Tiemstamp Colorized in the Console
             DateTimeString = Write(DateTimeString + " ");
-            //Does String not Contains Color-Codes?
-            if (!PString.Contains(FStartColorCodeStr) && !PString.Contains(FStopColorCodeStr))
+            //Does String not Contains Color-Codes, or ist GTANetworkColorsEnabled and String contains tilde?
+            if (!PString.Contains(FStartColorCodeStr) && !PString.Contains(FStopColorCodeStr) && 
+                (FIncludeGTANetworkColors && !PString.Contains("~")))
             {
                 //Then Write Directly
                 Console.WriteLine(PString);
