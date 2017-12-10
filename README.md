@@ -1,4 +1,5 @@
-# PrettyConsole
+# PrettyConsole (No future support (10.12.2017))
+# Well, almost a year later (PrettyConsole was my first C# project) I have to realize that "PrettyConsole" can be implemented much more elegantly and beautifully. Therefore: Should not be used.
 C # library for better formatted and colored console output
 
 ```c# 
